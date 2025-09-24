@@ -1,83 +1,78 @@
-# Face Recognition Project (ESP32 + Flask + OpenCV)
+🎭 Face Recognition Project
 
-## 📌 Overview  
-This project implements a real-time facial recognition system using an ESP32 camera module, a Python Flask server, and a simple web interface.  
+A real-time facial recognition system built with Flask, Python, OpenCV, and ESP32-CAM, connected to a MySQL database for storing and verifying users.
 
-- **ESP32** captures an image.  
-- **Flask server** processes the image and compares it with the stored database using embeddings.  
-- **Web page** displays recognition results.  
+This project demonstrates how AI and IoT can work together for secure authentication and real-time video streaming.
 
----
+🚀 Features
 
-## 🛠️ Features  
-- Add new faces to the database via camera.  
-- Real-time recognition of individuals.  
-- Web interface for capturing and testing.  
-- Modular design for better organization:  
-  - `CodePython/` → Python scripts (Flask server, database tools)  
-  - `CodeESP32/` → ESP32 Arduino code  
-  - `Web/` → HTML, CSS, JS interface  
+📷 ESP32-CAM Integration → live camera feed to Flask server.
 
----
+🧠 Face Detection & Recognition using OpenCV.
 
-## 📂 Project Structure  
+🗄️ Database Integration (MySQL) → stores user details & embeddings.
 
-Face Recognition Project/
-│── CodePython/
-│ ├── AddToDatabase.py
-│ ├── Server.py
-│
-│── CodeESP32/
-│ └── ESP32_FaceRecognition.ino
-│
-│── Web/
-│ └── index.html # contains HTML, CSS, and JavaScript together
-│
-│── requirements.txt
-│── schema.sql
-│── README.md
+🌐 Web Dashboard (Flask) → real-time video & recognition results.
 
-yaml
-Copy code
+🔒 Secure Authentication → only recognized users are granted access.
 
----
+📂 Project Structure
+face-recognition-project/
+│── app.py              # Flask server
+│── esp32/              # ESP32-CAM Arduino code
+│── models/             # Trained face recognition models
+│── static/             # CSS/JS files for Flask app
+│── templates/          # HTML pages (Flask Jinja2)
+│── database/           # MySQL setup scripts
+│── README.md           # Project documentation
 
-## ⚙️ Installation & Setup  
+⚙️ Setup & Installation
+🔧 Requirements
 
-### 1. Clone the repository  
-```bash
-git clone https://github.com/yamritech-tech/face-recognition-project.git
-cd face-recognition-project
-2. Install dependencies
-bash
-Copy code
-pip install -r requirements.txt
-3. Setup the database
-Run in MySQL:
+Python 3.8+
 
-sql
-Copy code
-SOURCE schema.sql;
-4. Start the server
-bash
-Copy code
-python CodePython/Server.py
-5. Access the web interface
-Open in your browser:
-👉 http://localhost:5000
+OpenCV
 
-💻 Usage
-Add new user: Run AddToDatabase.py, enter a name, capture a photo.
-
-Recognition: ESP32 captures an image, server checks against the database.
-
-Results: Web page shows recognized individual or "not recognized".
-
-🚀 Technologies Used
-ESP32-CAM
-
-Python (Flask, OpenCV, NumPy, Imgbeddings)
+Flask
 
 MySQL
 
-HTML, CSS, JavaScript
+ESP32-CAM + Arduino IDE
+
+🖥️ Steps
+
+Clone the repository:
+
+git clone https://github.com/yamritech-tech/face-recognition-project.git
+cd face-recognition-project
+
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+
+Configure database in app.py with your MySQL credentials.
+
+Upload ESP32 code from esp32/ to your ESP32-CAM.
+
+Run Flask app:
+
+python app.py
+
+
+Open browser at http://127.0.0.1:5000
+
+🎥 Demo
+ 
+📌 Future Improvements
+
+🔑 Add JWT-based user authentication
+
+☁️ Cloud deployment with Docker
+
+📱 Mobile client for real-time alerts
+
+👤 Author
+
+Yamritech
