@@ -71,7 +71,8 @@ python app.py
 Open browser at http://127.0.0.1:5000
 
 🎥 Demo
- <img width="1776" height="895" alt="image" src="https://github.com/user-attachments/assets/f6daebf6-c251-4499-8258-6709ce837323" />
+ <img width="752" height="489" alt="image" src="https://github.com/user-attachments/assets/ef004784-c412-4ffd-bc1c-98f626dc646d" />
+
 
 📌 Future Improvements
 
