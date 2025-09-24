@@ -17,14 +17,21 @@ This project demonstrates how AI and IoT can work together for secure authentica
 🔒 Secure Authentication → only recognized users are granted access.
 
 📂 Project Structure
-face-recognition-project/
-│── app.py              # Flask server
-│── esp32/              # ESP32-CAM Arduino code
-│── models/             # Trained face recognition models
-│── static/             # CSS/JS files for Flask app
-│── templates/          # HTML pages (Flask Jinja2)
-│── database/           # MySQL setup scripts
-│── README.md           # Project documentation
+ Face Recognition Project/ 
+ │── CodePython/ 
+ │
+ ├── AddToDatabase.py
+ │
+ ├── Server.py 
+ │
+ │── CodeESP32/ 
+ │ └── ESP32_FaceRecognition.ino 
+ │ │── Web/ │
+ ├── index.html # contains HTML, CSS, and JavaScript together
+ │ 
+ │── requirements.txt
+ │── schema.sql
+ │── README.md
 
 ⚙️ Setup & Installation
 🔧 Requirements
