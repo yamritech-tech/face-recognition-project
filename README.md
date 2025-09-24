@@ -64,7 +64,8 @@ python app.py
 Open browser at http://127.0.0.1:5000
 
 🎥 Demo
- 
+ <img width="1776" height="895" alt="image" src="https://github.com/user-attachments/assets/f6daebf6-c251-4499-8258-6709ce837323" />
+
 📌 Future Improvements
 
 🔑 Add JWT-based user authentication
