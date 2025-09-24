@@ -1,0 +1,9 @@
+Flask==3.0.2
+flask-cors==4.0.0
+pymysql==1.1.1
+opencv-python==4.10.0.84
+imgbeddings==0.1.4
+pillow==10.3.0
+requests==2.32.3
+numpy==1.26.4
+

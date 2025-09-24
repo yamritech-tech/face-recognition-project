@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Camera Interface</title>
+    <style>
+        /* Google Fonts for custom text styling */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap');
+
+        /* Gradient animated background */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #2193b0, #6dd5ed, #cc2b5e);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* Smooth gradient animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Center container styling */
+        .container {
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        /* Heading styling with Pacifico font */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #444;
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+
+        /* Button styling with pop effect */
+        button {
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            transform: scale(1.05);
+        }
+
+        /* Image styling */
+        img {
+            margin-top: 25px;
+            max-width: 100%;
+            border-radius: 12px;
+            border: 4px solid #ddd;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Text styling */
+        p {
+            margin-top: 25px;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .loading {
+            display: none;
+            font-size: 20px;
+            color: #666;
+            margin-top: 25px;
+        }
+
+        /* Animated loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(0, 0, 0, 0.3);
+            border-top-color: #2193b0;
+            border-radius: 50%;
+            animation: spin 1s ease infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Fade-in animation for container */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ESP32 Camera Interface</h1>
+        <button id="captureBtn">📸 Capture Image</button>
+        <div class="loading" id="loadingMessage">
+            <div class="spinner"></div> Capturing image...
+        </div>
+        <img id="capturedImage" alt="Captured Image will appear here">
+        <div class="loading" id="recognitionLoading">
+            <div class="spinner"></div> Recognizing face...
+        </div>
+        <p id="recognitionResult">Recognition result will appear here</p>
+        <footer>&copy; 2024 ESP32 Camera Interface</footer>
+    </div>
+
+    <script>
+        document.getElementById('captureBtn').addEventListener('click', async () => {
+            const imageUrl = 'http://10.99.130.168/capture';
+            const recognitionUrl = 'http://10.99.130.49:5000/recognize';
+
+            try {
+                document.getElementById('loadingMessage').style.display = 'block';
+                document.getElementById('recognitionResult').innerText = '';
+
+                const response = await fetch(imageUrl);
+                if (!response.ok) throw new Error('Failed to capture image from ESP32');
+
+                const blob = await response.blob();
+                const imageObjectURL = URL.createObjectURL(blob);
+
+                document.getElementById('capturedImage').src = imageObjectURL;
+                document.getElementById('loadingMessage').style.display = 'none';
+
+                const formData = new FormData();
+                formData.append('image', blob, 'image.jpg');
+
+                document.getElementById('recognitionLoading').style.display = 'block';
+
+                const recognitionResponse = await fetch(recognitionUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                document.getElementById('recognitionLoading').style.display = 'none';
+
+                if (recognitionResponse.ok) {
+                    const recognitionResult = await recognitionResponse.json();
+                    console.log('Recognition result received:', recognitionResult);
+                    document.getElementById('recognitionResult').innerText = recognitionResult.result || 'No result received from server';
+                } else {
+                    console.error('Failed to get recognition result:', recognitionResponse.statusText);
+                    document.getElementById('recognitionResult').innerText = 'Error: Recognition failed';
+                }
+            } catch (error) {
+                console.error('Error during the capture or recognition process:', error);
+                document.getElementById('recognitionResult').innerText = 'An error occurred. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>
